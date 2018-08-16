@@ -1,14 +1,14 @@
 
-importunittest 
+import unittest 
 import numpy as np 
 import pandas as pd 
 from healthcareai.tests import helpers 
+from sklearn.ensemble import RandomForestClassifier
 from healthcareai.trained_models.trained_supervised_model import TrainedSupervisedModel 
 import healthcareai.datasets as hcai_datasets 
 from healthcareai import AdvancedSupervisedModelTrainer 
 import healthcareai.tests.helpers as test_helpers
 class TestAdvancedSupervisedModelTrainer(unittest.TestCase): 
-@classmethod 
 def setUpClass(cls): 
 cls.df = helpers.load_sample_dataframe() 
 cls.df = hcai_datasets.load_diabetes() 
@@ -17,24 +17,26 @@ class TestRandomForestClassification(unittest.TestCase):
 def setUp(self): 
 df = pd.read_csv(test_helpers.fixture('DiabetesClinicalSampleData.csv'), na_values=['None']) 
 df = hcai_datasets.load_diabetes()
+df.head()
 df.drop(['PatientID'], axis=1, inplace=True)
 test_helpers.assertBetween(self, 0.7, 0.97, rf.metrics['roc_auc']) 
-def test_random_foarest_tuning_2_column_raises_error(self): 
+def test_random_foarest_tuning_2_column_raises_error(self):
+test_helpers.options.mode.chained_assignment = None
 cols = ['ThirtyDayReadmitFLG', 'SystolicBPNBR', 'LDLNBR'] 
 df = pd.read_csv(test_helpers.fixture('DiabetesClinicalSampleData.csv'), 
-na_values=['None'], 
-usecols=cols) 
+df.options.mode.chained_assignment = None
 df_raw = hcai_datasets.load_diabetes()
 df = df_raw[['ThirtyDayReadmitFLG', 'SystolicBPNBR', 'LDLNBR']] 
 np.random.seed(42) 
 clean_df = pipelines.full_pipeline(
 class TestLogisticRegression(unittest.TestCase): 
+clean_df.options.mode.chained_assignment = None
 def setUp(self): 
+print(df)
 df = pd.read_csv(test_helpers.fixture('DiabetesClinicalSampleData.csv'), na_values=['None']) 
 df = hcai_datasets.load_diabetes() 
 df.drop(['PatientID'], axis=1, inplace=True)
 class TestMetricValidation(unittest.TestCase): 
-# TODO this is pretty spartan testing only looking for happy path on binary classification 
 def setUp(self): 
 df = pd.read_csv(test_helpers.fixture('DiabetesClinicalSampleData.csv'), na_values=['None']) 
 df = hcai_datasets.load_diabetes()
@@ -51,3 +53,7 @@ df = pd.read_csv(test_helpers.fixture('DiabetesClinicalSampleData.csv'), na_valu
 df = hcai_datasets.load_diabetes() 
 result = count_unique_elements_in_column(df, 'PatientEncounterID') 
 self.assertEqual(result, 1000) 
+define accuracy
+accuracy=(result==85%)
+print(accuracy)
+self.asser.head()
